@@ -1,0 +1,247 @@
+/* ============================================================
+   ATLAS DE LA GRAN COLOMBIA — hoja de estilos
+   Diseño tipo atlas cartográfico profesional
+   ============================================================ */
+:root{
+  --tinta:#13202f;          /* azul tinta profundo */
+  --tinta-2:#3c4c5e;
+  --papel:#f5f2ea;          /* crema de atlas */
+  --papel-2:#eee9dd;
+  --carta:#fdfcf8;
+  --linea:#d9d2c0;
+  --oro:#b98a2e;
+  --oro-2:#8f6a1f;
+  --mar:#dce8ee;            /* azul mar de los mapas */
+  --col-co:#f2a900; --col-ve:#d64550; --col-ec:#2d7dd2; --col-pa:#1fa67a;
+  --col-tt:#8e5bc0; --col-mq:#e07b39; --col-an:#18b6c9; --col-mx:#5e8c61;
+  --sombra:0 1px 2px rgba(19,32,47,.07),0 10px 28px -14px rgba(19,32,47,.25);
+  --f-display:"Fraunces",Georgia,serif;
+  --f-texto:"Instrument Sans",system-ui,sans-serif;
+  --f-mono:"IBM Plex Mono",ui-monospace,monospace;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{
+  font-family:var(--f-texto);color:var(--tinta);background:var(--papel);
+  background-image:radial-gradient(rgba(19,32,47,.045) 1px,transparent 1px);
+  background-size:26px 26px;line-height:1.6;font-size:16.5px;
+}
+img,svg{max-width:100%;height:auto}
+a{color:var(--oro-2);text-decoration:none}
+a:hover{text-decoration:underline}
+.mono{font-family:var(--f-mono);font-size:.92em}
+.contenedor{max-width:1180px;margin:0 auto;padding:0 22px}
+
+/* ---------- cabecera ---------- */
+header.sitio{
+  background:linear-gradient(180deg,#101d2c,#16273b);color:#f1ead8;
+  border-bottom:3px solid var(--oro);position:sticky;top:0;z-index:50;
+}
+.cab{display:flex;align-items:center;gap:16px;padding:10px 0;flex-wrap:wrap}
+.marca{display:flex;align-items:center;gap:12px;color:#f6efdd;text-decoration:none}
+.marca:hover{text-decoration:none}
+.marca .bandera-mini{width:52px;border:1px solid rgba(246,239,221,.35);border-radius:3px;overflow:hidden;flex:none;box-shadow:0 2px 8px rgba(0,0,0,.35)}
+.marca h1{font-family:var(--f-display);font-weight:600;font-size:1.18rem;letter-spacing:.04em;line-height:1.15}
+.marca small{display:block;font-family:var(--f-mono);font-size:.62rem;letter-spacing:.28em;color:var(--oro);text-transform:uppercase;margin-top:2px}
+nav.principal{margin-left:auto;display:flex;gap:2px;flex-wrap:wrap}
+nav.principal a{
+  color:#d8cfb8;font-size:.84rem;font-weight:600;padding:8px 11px;border-radius:6px;
+  letter-spacing:.02em;text-transform:uppercase;font-family:var(--f-mono);font-size:.72rem;
+}
+nav.principal a:hover{color:#fff;background:rgba(255,255,255,.08);text-decoration:none}
+nav.principal a.activo{color:var(--tinta);background:var(--oro);}
+.contador-chip{font-family:var(--f-mono);font-size:.68rem;color:#cfc5aa;border:1px solid rgba(207,197,170,.35);padding:4px 10px;border-radius:99px;white-space:nowrap}
+.contador-chip b{color:#fff}
+
+/* ---------- lámina / tarjeta ---------- */
+.lamina{
+  background:var(--carta);border:1px solid var(--linea);border-radius:10px;
+  box-shadow:var(--sombra);padding:26px 28px;margin:26px 0;position:relative;
+}
+.lamina::before{
+  content:attr(data-folio);position:absolute;top:12px;right:16px;
+  font-family:var(--f-mono);font-size:.62rem;letter-spacing:.22em;color:#b3a98e;text-transform:uppercase;
+}
+.rotulo{
+  font-family:var(--f-mono);font-size:.68rem;letter-spacing:.3em;text-transform:uppercase;
+  color:var(--oro-2);display:flex;align-items:center;gap:12px;margin-bottom:10px;
+}
+.rotulo::after{content:"";flex:1;height:1px;background:linear-gradient(90deg,var(--linea),transparent)}
+h2.titulo{font-family:var(--f-display);font-weight:600;font-size:clamp(1.5rem,3.4vw,2.1rem);line-height:1.16;margin-bottom:12px}
+h3{font-family:var(--f-display);font-weight:600;font-size:1.2rem;margin:24px 0 10px}
+.lamina p{margin:10px 0;max-width:72ch}
+.suave{color:var(--tinta-2)}
+
+/* ---------- portada ---------- */
+.hero{padding:42px 0 6px;text-align:center}
+.hero .bandera-hero{width:min(330px,72vw);margin:0 auto 20px;border-radius:6px;overflow:hidden;border:1px solid var(--linea);box-shadow:var(--sombra);animation:ondeo 7s ease-in-out infinite;transform-origin:50% 0}
+@keyframes ondeo{0%,100%{transform:perspective(700px) rotateY(0deg)}50%{transform:perspective(700px) rotateY(4deg)}}
+.hero h2{font-family:var(--f-display);font-size:clamp(1.9rem,5vw,3.1rem);font-weight:600;line-height:1.1;letter-spacing:-.01em}
+.hero .lema{font-family:var(--f-mono);letter-spacing:.3em;text-transform:uppercase;font-size:.72rem;color:var(--oro-2);margin:14px 0 4px}
+.hero p.intro{max-width:62ch;margin:14px auto;color:var(--tinta-2)}
+
+/* cifras */
+.cifras{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:14px;margin:24px 0}
+.cifra{background:var(--carta);border:1px solid var(--linea);border-radius:10px;padding:16px 18px;text-align:center;box-shadow:var(--sombra)}
+.cifra b{display:block;font-family:var(--f-mono);font-size:clamp(1.25rem,2.6vw,1.7rem);font-weight:600;letter-spacing:-.02em}
+.cifra span{font-size:.72rem;letter-spacing:.18em;text-transform:uppercase;color:var(--tinta-2);font-family:var(--f-mono)}
+
+/* ---------- mapa ---------- */
+.marco-mapa{
+  background:linear-gradient(180deg,var(--mar),#e8f0f4);
+  border:1px solid var(--linea);border-radius:10px;padding:10px;box-shadow:inset 0 0 0 6px var(--carta), var(--sombra);
+}
+#mapa svg,#mini-mapa svg{display:block;width:100%;height:auto}
+.region{cursor:pointer}
+.region path{stroke:#fdfcf8;stroke-width:.9;transition:filter .15s,opacity .15s;fill-rule:evenodd}
+.region:hover path,.region:focus path{filter:brightness(1.13) saturate(1.15)}
+.region:focus{outline:none}
+.region.atenuada path{opacity:.18}
+.etq{font-family:var(--f-mono);font-weight:600;fill:#1d2b3a;paint-order:stroke;stroke:rgba(253,252,248,.85);stroke-width:2.4px;pointer-events:none;text-anchor:middle}
+.etq.clara{fill:#fff;stroke:rgba(19,32,47,.55)}
+.inset-marco{fill:none;stroke:#7e95a6;stroke-dasharray:5 4;stroke-width:1}
+.inset-rotulo{font-family:var(--f-mono);font-size:10.5px;fill:#5b7283;letter-spacing:.08em}
+.graticula{stroke:#b9cdd9;stroke-width:.5;stroke-dasharray:1 5}
+#tooltip{
+  display:none;position:fixed;z-index:99;background:#16273b;color:#f4efe2;border:1px solid var(--oro);
+  border-radius:8px;padding:10px 13px;font-size:.86rem;line-height:1.45;max-width:270px;pointer-events:none;
+  box-shadow:0 12px 30px -8px rgba(0,0,0,.5);
+}
+#tooltip b{font-family:var(--f-display);font-size:1rem;color:#fff}
+.leyenda{display:flex;flex-wrap:wrap;gap:8px 18px;margin-top:14px;font-size:.82rem}
+.leyenda span{display:inline-flex;align-items:center;gap:7px;color:var(--tinta-2)}
+.leyenda i{width:14px;height:14px;border-radius:4px;display:inline-block;border:1px solid rgba(0,0,0,.12)}
+
+/* ---------- tablas ---------- */
+.tabla-marco{overflow-x:auto;border:1px solid var(--linea);border-radius:10px;background:var(--carta)}
+table{width:100%;border-collapse:collapse;font-size:.88rem;min-width:560px}
+thead th{
+  font-family:var(--f-mono);font-size:.66rem;letter-spacing:.16em;text-transform:uppercase;color:var(--tinta-2);
+  text-align:left;padding:11px 13px;border-bottom:2px solid var(--linea);background:var(--papel-2);position:sticky;top:0;
+}
+tbody td{padding:9px 13px;border-bottom:1px solid #ece7d8;vertical-align:top}
+tbody tr:nth-child(even){background:#faf8f1}
+tbody tr:hover{background:#f3eedd}
+td.num,th.num{text-align:right;font-family:var(--f-mono);font-size:.82rem;white-space:nowrap}
+tfoot td{padding:10px 13px;font-weight:700;border-top:2px solid var(--linea);font-family:var(--f-mono);font-size:.8rem}
+
+/* ---------- gráficas ---------- */
+.grafica{margin:14px 0}
+.grafica svg{width:100%;height:auto}
+.bar-lbl{font-family:var(--f-texto);font-size:13px;fill:var(--tinta)}
+.bar-val{font-family:var(--f-mono);font-size:11.5px;fill:var(--tinta-2)}
+.treemap text{font-family:var(--f-mono);pointer-events:none}
+.treemap rect{stroke:var(--carta);stroke-width:1.5;transition:filter .15s}
+.treemap g:hover rect{filter:brightness(1.12)}
+
+/* ---------- página de departamento ---------- */
+.dep-cab{display:flex;gap:18px;align-items:flex-start;flex-wrap:wrap}
+.dep-cab .franja{width:64px;flex:none;border-radius:6px;overflow:hidden;border:1px solid var(--linea)}
+.chips{display:flex;flex-wrap:wrap;gap:8px;margin:12px 0}
+.chip{font-family:var(--f-mono);font-size:.7rem;letter-spacing:.06em;background:var(--papel-2);border:1px solid var(--linea);border-radius:99px;padding:5px 12px;color:var(--tinta-2)}
+.chip.pais{background:var(--tinta);color:#f1ead8;border-color:var(--tinta)}
+.dos-col{display:grid;grid-template-columns:1.1fr .9fr;gap:24px;align-items:start}
+@media(max-width:880px){.dos-col{grid-template-columns:1fr}}
+.nav-deptos{display:flex;justify-content:space-between;gap:14px;margin:28px 0;flex-wrap:wrap}
+.nav-deptos a{font-family:var(--f-mono);font-size:.78rem;border:1px solid var(--linea);background:var(--carta);border-radius:8px;padding:10px 16px;color:var(--tinta)}
+.nav-deptos a:hover{border-color:var(--oro);text-decoration:none;background:#fff}
+
+/* ---------- cuadrícula de tarjetas ---------- */
+.malla{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:16px;margin:18px 0}
+.tarjeta{background:var(--carta);border:1px solid var(--linea);border-radius:10px;padding:18px;box-shadow:var(--sombra);display:block;color:var(--tinta)}
+a.tarjeta:hover{text-decoration:none;border-color:var(--oro);transform:translateY(-2px);transition:.15s}
+.tarjeta h4{font-family:var(--f-display);font-size:1.06rem;margin-bottom:6px}
+.tarjeta .meta{font-family:var(--f-mono);font-size:.7rem;color:var(--tinta-2);letter-spacing:.04em}
+.punto{width:11px;height:11px;border-radius:3px;display:inline-block;margin-right:7px;vertical-align:-1px}
+
+/* ---------- artículos ---------- */
+article.post{max-width:760px;margin:0 auto}
+article.post h2.titulo{font-size:clamp(1.7rem,4vw,2.4rem)}
+article.post p{margin:15px 0}
+article.post h3{margin-top:30px}
+.post-meta{font-family:var(--f-mono);font-size:.72rem;letter-spacing:.14em;text-transform:uppercase;color:var(--tinta-2);margin-bottom:18px}
+.aviso-ficcion{
+  border-left:4px solid var(--oro);background:var(--papel-2);border-radius:0 8px 8px 0;
+  padding:12px 16px;font-size:.88rem;color:var(--tinta-2);margin:18px 0;
+}
+
+/* ---------- publicidad ---------- */
+.ad-slot{
+  margin:26px auto;min-height:110px;border:1.5px dashed #c9bf9f;border-radius:10px;
+  display:flex;align-items:center;justify-content:center;background:repeating-linear-gradient(45deg,#faf7ee,#faf7ee 12px,#f4f0e2 12px,#f4f0e2 24px);
+  color:#a4976f;font-family:var(--f-mono);font-size:.7rem;letter-spacing:.22em;text-transform:uppercase;text-align:center;
+}
+.ad-slot ins.adsbygoogle{display:block;width:100%}
+
+/* ---------- buscador ---------- */
+.buscador{position:relative;max-width:520px;margin:18px auto}
+.buscador input{
+  width:100%;padding:13px 18px;font:inherit;border:1px solid var(--linea);border-radius:99px;
+  background:var(--carta);box-shadow:var(--sombra);outline:none;
+}
+.buscador input:focus{border-color:var(--oro)}
+.sugerencias{
+  position:absolute;left:0;right:0;top:calc(100% + 6px);background:var(--carta);border:1px solid var(--linea);
+  border-radius:12px;box-shadow:var(--sombra);max-height:330px;overflow:auto;z-index:40;display:none;text-align:left;
+}
+.sugerencias a{display:flex;justify-content:space-between;gap:10px;padding:10px 16px;color:var(--tinta);border-bottom:1px solid #f0ebdd;font-size:.9rem}
+.sugerencias a:hover{background:var(--papel-2);text-decoration:none}
+.sugerencias .tipo{font-family:var(--f-mono);font-size:.64rem;letter-spacing:.12em;color:var(--tinta-2);text-transform:uppercase;align-self:center}
+
+/* ---------- pie ---------- */
+footer.sitio{background:#101d2c;color:#bdb39a;margin-top:60px;border-top:3px solid var(--oro)}
+footer .contenedor{padding:34px 22px;display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:24px;font-size:.86rem}
+footer h5{font-family:var(--f-mono);font-size:.66rem;letter-spacing:.26em;text-transform:uppercase;color:var(--oro);margin-bottom:10px}
+footer a{color:#ddd4bb;display:block;padding:3px 0}
+footer .legal{grid-column:1/-1;border-top:1px solid rgba(221,212,187,.18);padding-top:16px;font-size:.78rem;color:#9a917b}
+
+@media(max-width:640px){
+  .lamina{padding:20px 16px}
+  nav.principal{gap:0}
+  nav.principal a{padding:7px 8px;font-size:.64rem}
+}
+@media print{header.sitio,footer.sitio,.ad-slot,.buscador{display:none}}
+
+/* ============================================================
+   FASE 2.1 — Publicidad lateral + superior y móvil
+   ============================================================ */
+.ad-top{margin:18px auto 6px;min-height:90px;max-width:1180px}
+.con-laterales{display:grid;grid-template-columns:1fr;max-width:1660px;margin:0 auto}
+.ad-lateral{display:none}
+@media(min-width:1380px){
+  .con-laterales{grid-template-columns:180px minmax(0,1180px) 180px;gap:18px;padding:0 12px}
+  .ad-lateral{display:block;position:sticky;top:86px;align-self:start;min-height:560px;margin-top:26px;
+    border:1.5px dashed #c9bf9f;border-radius:10px;
+    background:repeating-linear-gradient(45deg,#faf7ee,#faf7ee 12px,#f4f0e2 12px,#f4f0e2 24px);
+    color:#a4976f;font-family:var(--f-mono);font-size:.62rem;letter-spacing:.2em;text-transform:uppercase;
+    display:flex;align-items:center;justify-content:center;text-align:center;writing-mode:vertical-rl}
+}
+/* comparaciones */
+.vs-fila{display:grid;grid-template-columns:170px 1fr 90px;gap:10px;align-items:center;margin:7px 0;font-size:.88rem}
+.vs-fila .nom{text-align:right;font-weight:600}
+.vs-fila .barra{height:22px;border-radius:5px;background:var(--papel-2);overflow:hidden;border:1px solid var(--linea)}
+.vs-fila .barra i{display:block;height:100%;border-radius:4px}
+.vs-fila .val{font-family:var(--f-mono);font-size:.76rem;white-space:nowrap}
+.vs-fila.gc .nom{color:var(--oro-2)}
+@media(max-width:560px){.vs-fila{grid-template-columns:110px 1fr 70px;font-size:.78rem}}
+
+/* móvil fino */
+@media(max-width:640px){
+  body{font-size:15.5px}
+  .contenedor{padding:0 14px}
+  nav.principal{margin-left:0;width:100%;overflow-x:auto;flex-wrap:nowrap;-webkit-overflow-scrolling:touch;scrollbar-width:none}
+  nav.principal::-webkit-scrollbar{display:none}
+  nav.principal a{white-space:nowrap}
+  .contador-chip{display:none}
+  .hero{padding:26px 0 4px}
+  .hero .bandera-hero{width:min(250px,78vw)}
+  .cifras{grid-template-columns:repeat(2,1fr);gap:10px}
+  .cifra{padding:12px 10px}
+  table{font-size:.8rem;min-width:480px}
+  thead th{padding:9px 9px}
+  tbody td{padding:8px 9px}
+  .dos-col{gap:16px}
+  .nav-deptos a{flex:1;text-align:center}
+  .ad-slot{min-height:90px;margin:18px auto}
+  h2.titulo{font-size:1.45rem}
+}

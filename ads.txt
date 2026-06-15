@@ -1,0 +1,2 @@
+# Google AdSense: al ser aprobado, reemplaza esta linea por la que te entrega AdSense, con tu pub-ID:
+# google.com, pub-XXXXXXXXXXXXXXXX, DIRECT, f08c47fec0942fa0
