@@ -89,7 +89,12 @@ function dibujarMapa(cont, opts={}){
     }
     regiones+=`<g class="region${aten?' atenuada':''}" data-slug="${d.slug}" tabindex="${mini?-1:0}" role="link" aria-label="${esc(d.nombre)}"><path d="${g.p}" fill="${fill}"/>${lbl}</g>`;
   }
-  cont.innerHTML = `<svg viewBox="${G.vb}" xmlns="http://www.w3.org/2000/svg" aria-label="Mapa de la Gran Colombia con sus 50 departamentos">${grat}${insets}${regiones}</svg>`;
+  // fronteras internas del Amazonas (provincias) — solo en el mapa grande
+  let amazLineas = '';
+  if(!mini && G.amazInternas){
+    amazLineas = `<path class="amaz-provincias" d="${G.amazInternas}" fill="none"/>`;
+  }
+  cont.innerHTML = `<svg viewBox="${G.vb}" xmlns="http://www.w3.org/2000/svg" aria-label="Mapa de la Gran Colombia con sus 50 departamentos">${grat}${insets}${regiones}${amazLineas}</svg>`;
   activarMapa(cont);
 }
 
