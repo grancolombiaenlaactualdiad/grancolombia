@@ -248,3 +248,24 @@ footer .legal{grid-column:1/-1;border-top:1px solid rgba(221,212,187,.18);paddin
 
 /* Fronteras internas (provincias) del distrito Amazonas: punteado sutil */
 .amaz-provincias{stroke:#2a3a2c;stroke-width:1.1;stroke-dasharray:2.5 2.5;opacity:.5;pointer-events:none;stroke-linejoin:round}
+
+/* ---------- mapa municipal del departamento ---------- */
+.mapa-muni{padding:8px}
+.mapa-muni svg{display:block;width:100%;height:auto}
+.muni path{stroke:#fdfcf8;stroke-width:.9;transition:fill-opacity .15s,filter .15s;cursor:default}
+.muni:hover path{filter:brightness(1.12) saturate(1.2);fill-opacity:1}
+.muni-lbl{font-family:var(--f-mono);font-size:9.5px;font-weight:500;fill:#13202f;text-anchor:middle;
+  paint-order:stroke;stroke:rgba(253,252,248,.9);stroke-width:2.4px;pointer-events:none}
+@media(max-width:640px){.muni-lbl{font-size:8px;stroke-width:2px}}
+
+/* ---------- prioridad visual: mapa municipal grande ---------- */
+.dos-col.mapas-dep{grid-template-columns:270px minmax(0,1fr);gap:26px;align-items:start}
+.mapas-dep .col-ubicacion{position:sticky;top:86px}
+.mapas-dep .col-ubicacion .marco-mapa{padding:6px;box-shadow:inset 0 0 0 4px var(--carta),var(--sombra)}
+.mapas-dep .col-municipal .mapa-muni{padding:12px}
+.mapas-dep .col-municipal svg{width:100%}
+@media(max-width:980px){
+  .dos-col.mapas-dep{grid-template-columns:1fr}
+  .mapas-dep .col-ubicacion{position:static;max-width:340px;margin:0 auto}
+  .mapas-dep .col-municipal{order:-1}   /* en móvil el mapa municipal va primero */
+}

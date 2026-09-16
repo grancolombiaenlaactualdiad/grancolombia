@@ -142,22 +142,60 @@ function squarify(items, x, y, w, h, out){
     squarify(resto,x,y+fh,w,h-fh,out);
   }
 }
+/* =================== MAPA MUNICIPAL DEL DEPARTAMENTO =================== */
 const elTree = $('#treemap');
 if(elTree && SLUG && bySlug[SLUG]){
-  const d=bySlug[SLUG];
-  const items=(d.munis||[]).map(m=>({n:m.n,v:m.t||m.u||1})).filter(i=>i.v>0).sort((a,b)=>b.v-a.v).slice(0,40);
-  if(items.length){
-    const out=[]; squarify(items,0,0,760,420,out);
-    const fill=colorPais(d.pais);
-    let svg='';
-    out.forEach((c,i)=>{
-      const op=0.45+0.55*(1-i/out.length);
-      const mostrar=c.w>56&&c.h>26;
-      svg+=`<g><title>${esc(c.n)} — ${fmt(c.v)} hab</title><rect x="${c.x.toFixed(1)}" y="${c.y.toFixed(1)}" width="${c.w.toFixed(1)}" height="${c.h.toFixed(1)}" fill="${fill}" opacity="${op.toFixed(2)}"/>`+
-        (mostrar?`<text x="${(c.x+5).toFixed(1)}" y="${(c.y+15).toFixed(1)}" font-size="${c.w>120?11:9}" fill="#1d2b3a">${esc(c.n.length>18?c.n.slice(0,17)+'…':c.n)}</text>`:'')+`</g>`;
+  const d = bySlug[SLUG];
+  const M = window.MUNI;
+  if(M && M.m && Object.keys(M.m).length > 1){
+    const base = colorPais(d.pais);
+    // datos del Excel para el tooltip
+    const info = {}; for(const m of (d.munis||[])) info[m.n] = m;
+    let paths = '', etiquetas = '';
+    const entradas = Object.entries(M.m);
+    const grandes = entradas.filter(([n,o]) => o.v > 0).sort((a,b)=>b[1].v-a[1].v);
+    const conEtiqueta = new Set(grandes.slice(0, entradas.length > 45 ? 14 : entradas.length > 22 ? 20 : 40).map(x=>x[0]));
+    for(const [n,o] of entradas){
+      const op = (0.28 + 0.72*(o.r||0)).toFixed(2);
+      paths += `<g class="muni" data-n="${esc(n)}"><title>${esc(n)}${o.v?' — '+fmt(o.v)+' hab':''}</title>`+
+               `<path d="${o.p}" fill="${base}" fill-opacity="${op}"/></g>`;
+      if(conEtiqueta.has(n)){
+        const corto = n.length>17 ? n.split(/\s+-\s+/)[0].slice(0,16) : n;
+        etiquetas += `<text class="muni-lbl" x="${o.x}" y="${o.y}">${esc(corto)}</text>`;
+      }
+    }
+    elTree.innerHTML = `<div class="marco-mapa mapa-muni"><svg viewBox="${M.vb}" xmlns="http://www.w3.org/2000/svg" `+
+      `aria-label="Mapa con la división municipal de ${esc(d.nombre)}">${paths}${etiquetas}</svg></div>`;
+    // tooltip con los datos reales del Excel
+    const tip = $('#tooltip');
+    if(tip) elTree.querySelectorAll('.muni').forEach(g=>{
+      const n = g.dataset.n, m = info[n];
+      g.addEventListener('mousemove', e=>{
+        tip.style.display='block';
+        tip.innerHTML = `<b>${esc(n)}</b>` + (m ? `<br><span class="mono">${fmt(m.t||0)} hab</span>`+
+          `<br><span class="mono" style="opacity:.75">urbana ${fmt(m.u||0)} · rural ${fmt(m.r||0)}</span>`+
+          (m.a?`<br><span class="mono" style="opacity:.75">${fmt(m.a)} km²</span>`:'') : '');
+        tip.style.left = Math.min(e.clientX+14, innerWidth-285)+'px';
+        tip.style.top = (e.clientY+14)+'px';
+      });
+      g.addEventListener('mouseleave', ()=> tip.style.display='none');
     });
-    elTree.innerHTML=`<svg class="treemap" viewBox="0 0 760 420">${svg}</svg>`;
-  } else elTree.closest('.lamina')?.remove();
+  } else {
+    // sin cartografía municipal disponible: se conserva el treemap por población
+    const items=(d.munis||[]).map(m=>({n:m.n,v:m.t||m.u||1})).filter(i=>i.v>0).sort((a,b)=>b.v-a.v).slice(0,40);
+    if(items.length){
+      const out=[]; squarify(items,0,0,760,420,out);
+      const fill=colorPais(d.pais);
+      let svg='';
+      out.forEach((c,i)=>{
+        const op=0.45+0.55*(1-i/out.length);
+        const mostrar=c.w>56&&c.h>26;
+        svg+=`<g><title>${esc(c.n)} — ${fmt(c.v)} hab</title><rect x="${c.x.toFixed(1)}" y="${c.y.toFixed(1)}" width="${c.w.toFixed(1)}" height="${c.h.toFixed(1)}" fill="${fill}" opacity="${op.toFixed(2)}"/>`+
+          (mostrar?`<text x="${(c.x+5).toFixed(1)}" y="${(c.y+15).toFixed(1)}" font-size="${c.w>120?11:9}" fill="#1d2b3a">${esc(c.n.length>18?c.n.slice(0,17)+'…':c.n)}</text>`:'')+`</g>`;
+      });
+      elTree.innerHTML=`<svg class="treemap" viewBox="0 0 760 420">${svg}</svg>`;
+    } else elTree.closest('.lamina')?.remove();
+  }
 }
 
 /* =================== BARRAS DE EMPRESAS (página de departamento) =================== */
